@@ -22,9 +22,10 @@ NGINX Ingress Controller:
 * скачан docker, minikube, kubectl
 * пользователю добавлена группа докера
 
-Ingress настроен на прием как трафика с 80 так и 443 портов.
+Ingress настроен на прием как трафика с 80 так и 443 портов. Также создан ssl ключ и настроен tls для ingress
 
 Все листинги файлов представлены представлены в папках ansible и manifests
 
 <img src = "img/1.png" width = 100%>
 <img src = "img/2.png" width = 100%>
+<img src = "img/3.png" width = 100%>
