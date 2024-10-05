@@ -1,0 +1,49 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx1-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: api
+spec:
+  ingressClassName: "nginx"
+  tls:
+  - hosts:
+    - "nginx1.example.com"
+    secretName: nginx1-tls
+  rules:
+  - http:
+      paths:
+      - path: /testpath1
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service1
+            port:
+              number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx2-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: api
+spec:
+  ingressClassName: "nginx"
+  tls:
+  - hosts:
+    - "nginx2.example.com"
+    secretName: nginx2-tls
+  rules:
+  - http:
+      paths:
+      - path: /testpath2
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service2
+            port:
+              number: 80

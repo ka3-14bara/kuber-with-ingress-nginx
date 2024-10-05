@@ -1,0 +1,8 @@
+---
+
+- name: config-vm-for-minikub
+  hosts: minikube
+  become: yes
+  become_method: su
+  become_user: root
+  roles: minikube-env

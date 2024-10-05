@@ -1,0 +1,77 @@
+---
+# tasks file for my_role
+- name: update apt
+  apt:
+    update_cache: yes
+- name: install ca-certificates
+  apt:
+    name: ca-certificates
+    state: present
+- name: install curl
+  apt:
+    name: curl
+    state: present    
+- name: install gnupg
+  apt:
+    name: gnupg
+    state: present
+- name: install apt-transport-https
+  apt:
+    name: apt-transport-https
+    state: present
+- name: get GPG docker
+  ansible.builtin.shell:
+    cmd: sudo curl -fsSL "{{ docker_gpg }}" -o /etc/apt/keyrings/docker.asc
+- name: change mod
+  ansible.builtin.shell:
+    cmd: sudo chmod a+r /etc/apt/keyrings/docker.asc
+- name: add repo to apt
+  ansible.builtin.shell:
+    cmd: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] {{ docker_page }} $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+- name: update apt
+  apt:
+    update_cache: yes    
+- name: install docker-ce
+  apt:
+    name: docker-ce
+    state: present
+- name: install docker-ce-cli
+  apt:
+    name: docker-ce-cli
+    state: present    
+- name: install containerd.io
+  apt:
+    name: containerd.io
+    state: present
+- name: install docker-buildx-plugin
+  apt:
+    name: docker-buildx-plugin
+    state: present
+- name: install docker-compose-plugin
+  apt:
+    name: docker-compose-plugin
+    state: present
+- name: add user to docker group
+  ansible.builtin.shell:
+    cmd: sudo usermod -aG docker $USER 
+- name: neew grp
+  ansible.builtin.shell:
+    cmd: newgrp docker
+- name: install minikune package
+  ansible.builtin.shell:
+    cmd: curl -LO "{{ minikube_pack }}"
+- name: build minikune package
+  ansible.builtin.shell:
+    cmd: sudo dpkg -i minikube_latest_amd64.deb
+- name: get gpg kubectl
+  ansible.builtin.shell:
+    cmd: curl -s "{{ kubectl_gpg }}" | sudo apt-key add -
+- name: installing binary file of  kubectl
+  ansible.builtin.shell:
+    cmd: curl -LO https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl
+- name: change mod of binary kubectl
+  ansible.builtin.shell:
+    cmd: chmod +x ./kubectl
+- name: moving exec file
+  ansible.builtin.shell:
+    cmd: sudo mv ./kubectl /usr/local/bin/kubectl

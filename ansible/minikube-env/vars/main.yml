@@ -1,0 +1,7 @@
+---
+# vars file for my_role
+docker_gpg: 'https://download.docker.com/linux/ubuntu/gpg'
+docker_page: 'https://download.docker.com/linux/ubuntu'
+minikube_pack: 'https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb'
+kubectl_gpg: 'https://packages.cloud.google.com/apt/doc/apt-key.gpg'
+kubectl_pack: 'deb https://apt.kubernetes.io/ kubernetes-xenial main'
